@@ -163,6 +163,13 @@ robustness check, and the overfitting-mitigation grid — are in
 maps before and after the Attention Consistency Loss is in
 [`results/figures/`](results/figures/).
 
+## Authors
+
+Dhinanjaya Fernando, Dinura Ginige, Kalana Lakshan, Chanupa Gurusinghe,
+Lasana Pahanga, Dileesha Manamperi, Thimira Sahan, Sandareka Wickramanayake
+
+Dept. of Computer Science & Engineering, University of Moratuwa, Sri Lanka
+
 ## License
 
 Code is released under the [MIT License](LICENSE).
