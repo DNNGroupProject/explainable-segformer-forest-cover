@@ -1,6 +1,6 @@
 """
 Unit tests for the Attention Consistency Loss (Person 3), against dummy
-attention maps only — no trained SegFormer needed (per Phase 1 plan,
+attention maps only; no trained SegFormer needed (per Phase 1 plan,
 Person 3 weeks 1-2: "no trained model to attach a loss to yet").
 
 Run:

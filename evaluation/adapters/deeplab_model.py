@@ -1,5 +1,5 @@
 """
-DeepLabV3+ (MobileNetV3-Large) — optional extra baseline for Person 4.
+DeepLabV3+ (MobileNetV3-Large): optional extra baseline.
 
 Proposal stretch: "Extra baseline (DeepLabV3+ or Swin-Unet-Tiny), if time allows."
 We use torchvision DeepLabV3-MobileNetV3-Large (ASPP decoder ≈ DeepLabV3+ family)
@@ -23,7 +23,7 @@ def build_deeplabv3(num_classes: int = 2, pretrained_backbone: bool = True) -> n
     # Replace classification head for binary segmentation
     model.classifier[4] = nn.Conv2d(256, num_classes, kernel_size=1)
     if model.aux_classifier is not None:
-        # FCN head last conv — keep defensive
+        # FCN head last conv, keep defensive
         try:
             model.aux_classifier[4] = nn.Conv2d(
                 model.aux_classifier[4].in_channels, num_classes, kernel_size=1

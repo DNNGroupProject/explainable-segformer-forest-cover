@@ -1,5 +1,5 @@
 """
-PyTorch U-Net adapter — official CNN baseline.
+PyTorch U-Net adapter: official CNN baseline.
 
 Loads `unet_model.py` (repo root) via load_unet(), ImageNet-normalizes
 inputs the same way the dataset loader does, and scores the held-out test

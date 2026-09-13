@@ -1,5 +1,5 @@
 """
-Attention Consistency Loss (Person 3 — Loss & Training; proposal §3.3).
+Attention Consistency Loss (Person 3, Loss & Training; proposal §3.3).
 
     A* = Gaussian(Y)                          soft attention target
     L_att = MSE(A, A*)   or   KL(A || A*)     attention consistency loss
@@ -9,12 +9,12 @@ Attention Consistency Loss (Person 3 — Loss & Training; proposal §3.3).
 A is the adapted Grad-Rollout attention map (rollout.py), Y is the binary
 ground-truth forest mask. Gaussian-smoothing Y turns a hard 0/1 mask into a
 soft target so the loss doesn't punish attention for being slightly inside
-canopy edges — only for attending to clearly off-target regions (roads,
+canopy edges, only for attending to clearly off-target regions (roads,
 shadows, buildings).
 
 This module needs no trained model to be developed or unit-tested against
 per the Phase 1 plan (Person 3, weeks 1-2: "no trained model to attach a
-loss to yet") — gaussian_soft_target and AttentionConsistencyLoss both
+loss to yet"): gaussian_soft_target and AttentionConsistencyLoss both
 operate on plain tensors, exercised here with synthetic dummy attention
 maps in tests/test_attention_consistency_loss.py.
 """
@@ -35,7 +35,7 @@ def gaussian_soft_target(
     mask: torch.Tensor, sigma: float = 8.0, normalize: bool = True
 ) -> torch.Tensor:
     """
-    A* = Gaussian(Y) — proposal §3.3.
+    A* = Gaussian(Y), proposal §3.3.
 
     mask: (B, H, W) or (B, 1, H, W) binary {0,1} ground-truth forest mask.
     Returns a soft target of the same (B, H, W) shape. sigma=8 spreads mass
@@ -107,5 +107,5 @@ def total_objective(
     lambda1: float = 1.0,
     lambda2: float = 0.3,
 ) -> torch.Tensor:
-    """L = L_dice + λ1·L_bce + λ2·L_att — proposal §3.3 total objective."""
+    """L = L_dice + λ1·L_bce + λ2·L_att, proposal §3.3 total objective."""
     return l_dice + lambda1 * l_bce + lambda2 * l_att

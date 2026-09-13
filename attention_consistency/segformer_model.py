@@ -12,7 +12,7 @@ MiT-B0 stage config (SegFormer paper, Table 6):
   num_attention_heads = [1, 2, 5, 8]
   sr_ratios         = [8, 4, 2, 1]        (spatial-reduction ratio on K/V per stage)
 
-Stage 4 has sr_ratio=1 — i.e. no spatial reduction, ordinary square
+Stage 4 has sr_ratio=1, i.e. no spatial reduction, ordinary square
 self-attention. That property is what attention_consistency/rollout.py
 relies on (see its docstring and proposal §3.2).
 """
@@ -51,7 +51,7 @@ def build_segformer(
     (useful for fast shape/unit tests).
     """
     # "sdpa" (the default attn backend) does not expose attention_probs at
-    # all, which both the extraction hooks and Grad-Rollout need — "eager"
+    # all, which both the extraction hooks and Grad-Rollout need ("eager"
     # is required, not optional, for this pipeline.
     if pretrained:
         model = SegformerForSemanticSegmentation.from_pretrained(

@@ -25,12 +25,12 @@ grid) and a qualitative attention-map comparison.
   three of its four encoder stages, which breaks the recursive matrix
   product that Attention Rollout needs. Gradient-weighted Attention Rollout
   is adapted to run only on the one stage (`sr_ratio=1`) where the
-  attention matrix is square and token-consistent — see
+  attention matrix is square and token-consistent, see
   `attention_consistency/rollout.py`.
 - **Attention Consistency Loss.** The extracted attention map is compared
   against a Gaussian-smoothed ground-truth mask (MSE or KL form) and
   optimized jointly with the segmentation loss. Because the attention map is
-  itself defined through a gradient, this requires double backpropagation —
+  itself defined through a gradient, this requires double backpropagation,
   see `attention_consistency/loss.py` and `scripts/train_segformer.py`.
 - **AAMO.** A quantitative attention-fidelity metric (`evaluation/aamo.py`):
   the overlap between thresholded attention and the ground-truth mask,
@@ -42,19 +42,19 @@ grid) and a qualitative attention-map comparison.
 
 ## Repository layout
 
-```
-attention_consistency/   SegFormer-B0 + Attention Consistency Loss + Grad-Rollout
-boundary_refinement/     Boundary Refinement Module (morphological boundary Dice)
-evaluation/              Model-agnostic evaluation harness (AAMO, Dice/IoU/F1, efficiency,
-                         adapters for SegFormer / U-Net / DeepLabV3+)
-shared/                  Augmentation and experiment-tracking utilities used by
-                         more than one baseline
-scripts/                 Training entry points, loss-weight sweeps, and diagnostics
-tests/                   Unit tests (pure logic + synthetic tensors; no dataset needed)
-results/                 Final result tables and the qualitative attention-map figure
-unet_model.py            U-Net baseline (PyTorch)
-dataset.py               Dataset loading + split for the U-Net baseline
-```
+Each folder below has its own README with a per-file breakdown.
+
+| Folder | Contents |
+|--------|----------|
+| [`attention_consistency/`](attention_consistency/) | SegFormer-B0, the Attention Consistency Loss, and the adapted Grad-Rollout |
+| [`boundary_refinement/`](boundary_refinement/) | Boundary Refinement Module (morphological boundary Dice) |
+| [`evaluation/`](evaluation/) | Model-agnostic evaluation harness: AAMO, Dice/IoU/F1, efficiency, and adapters for SegFormer / U-Net / DeepLabV3+ |
+| [`shared/`](shared/) | Augmentation and experiment-tracking utilities used by more than one baseline |
+| [`scripts/`](scripts/) | Training entry points, loss-weight sweeps, and diagnostics |
+| [`tests/`](tests/) | Unit tests (pure logic and synthetic tensors; no dataset or GPU needed) |
+| [`results/`](results/) | Final result tables and the qualitative attention-map figure |
+| `unet_model.py` | U-Net baseline (PyTorch) |
+| `dataset.py` | Dataset loading and split for the U-Net baseline |
 
 ## Setup
 
@@ -70,7 +70,7 @@ also runs on CPU at reduced batch size / sample count for smoke-testing.
 Experiments use a 5,108-image RGB aerial forest/non-forest dataset at
 256x256 resolution (the "Forest Segmented" dataset), split 70/15/15
 (3576/766/766) under a fixed seed. The dataset is not distributed with this
-repository — place it under:
+repository; place it under:
 
 ```
 data/
@@ -145,7 +145,7 @@ python -m pytest tests/ -v
 ```
 
 All tests run on synthetic tensors or the small (< 1 MB) fixture checkpoint
-in `tests/fixtures/` — no dataset or GPU required.
+in `tests/fixtures/`; no dataset or GPU required.
 
 ## Results
 
@@ -157,8 +157,8 @@ in `tests/fixtures/` — no dataset or GPU required.
 | + Attention Consistency Loss (MSE) | 0.8577 | 0.7508 | 0.7476 | 3.7M |
 | + Attention Consistency + Boundary Refinement | 0.8669 | 0.7650 | 0.6218 | 3.7M |
 
-Full tables — the λ2/λ3 sweeps, the MSE-vs-KL comparison, a three-seed
-robustness check, and the overfitting-mitigation grid — are in
+Full tables (the λ2/λ3 sweeps, the MSE-vs-KL comparison, a three-seed
+robustness check, and the overfitting-mitigation grid) are in
 [`results/tables/`](results/tables/). A qualitative comparison of attention
 maps before and after the Attention Consistency Loss is in
 [`results/figures/`](results/figures/).

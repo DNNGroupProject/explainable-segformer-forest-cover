@@ -46,7 +46,7 @@ def test_fixture_is_not_the_baseline_width():
 
 
 def test_imagenet_normalize_is_applied():
-    """U-Net was trained with ImageNet mean/std — adapter must not use plain /255."""
+    """U-Net was trained with ImageNet mean/std; adapter must not use plain /255."""
     ad = UnetTorchAdapter()
     rgb = np.ones((1, 256, 256, 3), dtype=np.float32)
     t = ad._to_tensor(rgb)

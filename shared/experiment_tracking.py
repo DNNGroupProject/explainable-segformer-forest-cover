@@ -20,7 +20,7 @@ Usage (from any person's training/eval script):
     log({"epoch": epoch, "dice": dice, "iou": iou, "loss": loss})
 
 If `wandb` isn't installed or `WANDB_DISABLED=1` is set, `init_run` returns a
-no-op run and `log` silently does nothing — existing scripts keep working
+no-op run and `log` silently does nothing; existing scripts keep working
 unmodified if you don't opt in.
 """
 from __future__ import annotations
@@ -33,7 +33,7 @@ ENTITY = None  # set WANDB_ENTITY env var, or fill in your team/org name here
 
 
 class _NoOpRun:
-    """Drop-in stand-in when wandb isn't installed/enabled — every call is a no-op."""
+    """Drop-in stand-in when wandb isn't installed/enabled; every call is a no-op."""
 
     def log(self, *args, **kwargs):
         pass
@@ -65,7 +65,7 @@ def init_run(person: str, task: str, config: Optional[dict] = None, **kwargs) ->
         import wandb
     except ImportError:
         print(
-            "[experiment_tracking] wandb not installed — "
+            "[experiment_tracking] wandb not installed: "
             "run `pip install wandb` to enable shared tracking. Logging disabled for this run."
         )
         _active_run = _NoOpRun()
@@ -87,7 +87,7 @@ def init_run(person: str, task: str, config: Optional[dict] = None, **kwargs) ->
 def log(data: dict, **kwargs) -> None:
     """Log a dict of metrics to the active run (no-op if init_run wasn't called or is disabled)."""
     if _active_run is None:
-        print("[experiment_tracking] log() called before init_run() — ignoring:", data)
+        print("[experiment_tracking] log() called before init_run(), ignoring:", data)
         return
     _active_run.log(data, **kwargs)
 

@@ -33,7 +33,7 @@ Wire them in adapters/segformer_stub.py (rename to segformer.py when ready).
 
 
 class SegFormerStubAdapter(ModelAdapter):
-    """Vanilla SegFormer-B0 (no attention loss) — stub until Person 2 delivers."""
+    """Vanilla SegFormer-B0 (no attention loss): stub until Person 2 delivers."""
 
     name = "SegFormer-B0 (no attention loss)"
 
@@ -83,5 +83,5 @@ class SegFormerStubAdapter(ModelAdapter):
         Person 2: implement adapted Grad-Rollout → (H,W) attention in [0,1].
         """
         raise SegFormerNotReadyError(
-            "attention_map() not implemented — Person 2 Grad-Rollout hook required."
+            "attention_map() not implemented: Person 2 Grad-Rollout hook required."
         )

@@ -1,5 +1,5 @@
 """
-DeepLabV3+ (MobileNetV3-Large) adapter — Person 4 extra baseline.
+DeepLabV3+ (MobileNetV3-Large) adapter for the extra baseline.
 
 Usage:
     python evaluate.py --model deeplab
@@ -22,7 +22,7 @@ from efficiency import count_torch_params, gflops_torch, measure_fps
 
 
 class DeepLabV3Adapter(ModelAdapter):
-    name = "DeepLabV3+ (MobileNetV3) — extra baseline"
+    name = "DeepLabV3+ (MobileNetV3), extra baseline"
 
     def __init__(self):
         self.model = None

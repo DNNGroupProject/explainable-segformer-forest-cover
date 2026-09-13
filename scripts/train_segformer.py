@@ -68,7 +68,7 @@ def _to_input(images):
 
 
 def dice_bce(probs: torch.Tensor, target: torch.Tensor, eps: float = 1e-6):
-    """L_dice, L_bce — proposal §3.3, computed at full 256x256 resolution."""
+    """L_dice, L_bce: proposal §3.3, computed at full 256x256 resolution."""
     inter = (probs * target).sum(dim=(1, 2))
     union = probs.sum(dim=(1, 2)) + target.sum(dim=(1, 2))
     l_dice = (1 - (2 * inter + eps) / (union + eps)).mean()
@@ -130,7 +130,7 @@ def run_epoch_attention(
     model.train()  # Grad-Rollout needs a live graph even in "eval" mode
     tot_loss = tot_dice = tot_iou = tot_att = tot_bnd = 0.0
     n = len(images)
-    for i in range(n):  # batch size 1 — see Person 3 rollout.py's batch-size-1 constraint
+    for i in range(n):  # batch size 1, see Person 3 rollout.py's batch-size-1 constraint
         x, y = _to_input(images[i : i + 1]), torch.from_numpy(masks[i : i + 1]).to(DEVICE)
         if is_train:
             opt.zero_grad()
@@ -335,7 +335,7 @@ def main():
     if args.variant in ("att", "both") and args.lambda3 > 0:
         tag = f"{run_tag(args.lambda2, args.att_mode)}_bnd{args.lambda3:g}"
         set_output_dirs(config.CKPT_DIR / "runs" / tag, config.RESULTS_DIR / "runs" / tag)
-        print(f"Boundary Loss active (λ3={args.lambda3:g}) — writing to runs/{tag}/")
+        print(f"Boundary Loss active (λ3={args.lambda3:g}), writing to runs/{tag}/")
     torch.manual_seed(args.seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(args.seed)

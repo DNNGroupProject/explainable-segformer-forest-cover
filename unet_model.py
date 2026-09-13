@@ -18,7 +18,7 @@ import torch.nn.functional as F
 
 
 class DoubleConv(nn.Module):
-    """(Conv3x3 -> BN -> ReLU) x 2 — the standard U-Net block."""
+    """(Conv3x3 -> BN -> ReLU) x 2: the standard U-Net block."""
 
     def __init__(self, in_channels, out_channels):
         super().__init__()

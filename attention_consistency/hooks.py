@@ -1,7 +1,7 @@
 """
-Attention-extraction hooks for SegFormer-B0 (Person 2 — Transformer Lead task).
+Attention-extraction hooks for SegFormer-B0 (Person 2, Transformer Lead task).
 
-SegFormer-B0's encoder (`nvidia/mit-b0`) has 4 stages with depths [2,2,2,2] —
+SegFormer-B0's encoder (`nvidia/mit-b0`) has 4 stages with depths [2,2,2,2]:
 8 transformer blocks total, each holding a `SegformerAttention` submodule at
 `segformer.stages.{stage_idx}.blocks.{block_idx}.attention`. When the model
 is run with `output_attentions=True` and `attn_implementation="eager"`, each
@@ -10,14 +10,14 @@ is run with `output_attentions=True` and `attn_implementation="eager"`, each
 Rather than relying on that tuple only reaching us via the top-level
 `ModelOutput.attentions` (which forces recomputing/discarding the whole
 16-tuple every call), this module registers `torch.nn.Module` forward hooks
-directly on the stage-4 attention submodules (the ones with sr_ratio=1 —
+directly on the stage-4 attention submodules (the ones with sr_ratio=1,
 see rollout.py for why stage 4 is the one that matters) and captures the
 attention-probability tensors as they're produced, retaining their
 gradients in place so Gradient-weighted Attention Rollout (rollout.py) can
 read `.grad` after a backward pass.
 
 Verified attention_probs shape for a 256x256 input, MiT-B0 stage 4:
-(batch, num_heads=8, N=64, N=64) — square, since sr_ratio=1 there.
+(batch, num_heads=8, N=64, N=64): square, since sr_ratio=1 there.
 """
 from __future__ import annotations
 
@@ -48,7 +48,7 @@ class AttentionExtractor:
             module = dict(model.named_modules()).get(name)
             if module is None:
                 raise RuntimeError(
-                    f"Could not find attention submodule '{name}' — "
+                    f"Could not find attention submodule '{name}': "
                     "SegFormer internals may have changed in this transformers version."
                 )
             self._modules.append(module)
@@ -62,7 +62,7 @@ class AttentionExtractor:
             attn_probs = output[1] if isinstance(output, tuple) and len(output) > 1 else None
             if attn_probs is None:
                 raise RuntimeError(
-                    "Attention hook fired without attention_probs — "
+                    "Attention hook fired without attention_probs: "
                     "call the model with output_attentions=True."
                 )
             self._captured[slot] = attn_probs

@@ -36,7 +36,7 @@ def gflops_keras(model, input_shape=(1, 256, 256, 3)) -> Optional[float]:
 
         # Rough fallback: sum MultiplyAdd ops via profile if available
         concrete = tf.function(lambda x: model(x))
-        # Can't always get exact FLOPs without TF profiler setup — report None
+        # Can't always get exact FLOPs without TF profiler setup, report None
         _ = concrete
         return None
     except Exception:

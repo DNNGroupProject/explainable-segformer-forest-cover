@@ -5,7 +5,7 @@ Delegates model-building, attention extraction, and Grad-Rollout to the
 `attention_consistency` package (repo root) rather than duplicating it, so
 training and evaluation stay in sync with one implementation.
 
-Loads whichever checkpoint was placed in this folder's checkpoints/ dir —
+Loads whichever checkpoint was placed in this folder's checkpoints/ dir;
 see config.SEGFORMER_CKPT / SEGFORMER_ATT_CKPT for the expected filenames.
 """
 from __future__ import annotations
@@ -30,7 +30,7 @@ import config
 from adapters.base import ModelAdapter
 from efficiency import count_torch_params, gflops_torch, measure_fps
 
-# Same split the smoke-scale training script trained with — must match so
+# Same split the smoke-scale training script trained with; must match so
 # "test" here is the checkpoint's actual held-out set.
 _SPLIT_SEED = 42
 _N_TRAIN, _N_VAL, _N_TEST = 400, 60, 60

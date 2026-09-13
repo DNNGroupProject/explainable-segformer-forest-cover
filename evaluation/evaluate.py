@@ -46,7 +46,7 @@ def get_adapter(model_name: str, checkpoint: Optional[str] = None):
         ad = SegFormerAdapter("att")
     elif name in ("segformer-boundary", "boundary"):
         # Boundary Refinement Module is a Phase 2 stretch goal (proposal
-        # §3.4) — not implemented yet, still a stub.
+        # §3.4): not implemented yet, still a stub.
         from adapters.segformer_stub import SegFormerStubAdapter
 
         ad = SegFormerStubAdapter("boundary")
@@ -241,7 +241,7 @@ def evaluate_one(args) -> Dict[str, Any]:
 
 
 def parse_args():
-    p = argparse.ArgumentParser(description="Person 4 — shared evaluation")
+    p = argparse.ArgumentParser(description="Shared evaluation CLI")
     p.add_argument(
         "--model",
         default="unet",

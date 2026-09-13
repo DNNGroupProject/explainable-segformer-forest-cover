@@ -8,7 +8,7 @@ Weeks 3-4 with/without ablation possible -- it defaults to False, so the
 baseline path is unchanged.
 
 Defaults to `data/{images,masks}` at the repo root (not included in the
-repo — see README for how to obtain the dataset), matching the same choice
+repo, see README for how to obtain the dataset), matching the same choice
 `scripts/mask_audit.py` and `attention_consistency/data.py` both make.
 """
 from __future__ import annotations

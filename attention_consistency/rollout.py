@@ -1,6 +1,6 @@
 """
 Adapted Gradient-weighted Attention Rollout for SegFormer-B0
-(Person 2 — Transformer Lead task; proposal §3.2).
+(Person 2, Transformer Lead task; proposal §3.2).
 
 --------------------------------------------------------------------------
 Why plain Attention Rollout (Abnar & Zuidema, 2020) does not apply as-is
@@ -17,11 +17,11 @@ square (N x N) over the *same* N tokens, as in vanilla ViT. SegFormer's
 MiT-B0 encoder breaks that assumption twice over:
 
   1. Across stages, patch-merging changes the token grid entirely
-     (64x64 -> 32x32 -> 16x16 -> 8x8 for a 256x256 input) — there is no
+     (64x64 -> 32x32 -> 16x16 -> 8x8 for a 256x256 input); there is no
      single N shared across the whole encoder to roll out over.
   2. Within stages 1-3, "Efficient Self-Attention" spatially reduces the
      keys/values by sr_ratio (8, 4, 2), so even a single layer's attention
-     matrix is rectangular (N_query x N_query/sr^2), not square — verified
+     matrix is rectangular (N_query x N_query/sr^2), not square, verified
      empirically for MiT-B0 on a 256x256 input:
 
          stage 1: (heads=1, 4096, 64)   sr=8
@@ -37,11 +37,11 @@ the attention matrix square and token-consistent across its blocks, so the
 standard rollout recursion is mathematically valid without further
 approximation. Within that stage, each block's attention is weighted by
 the gradient of a target scalar w.r.t. that attention map before rolling
-out — Chefer, Gur & Wolf's Gradient-weighted Rollout, "Transformer
+out (Chefer, Gur & Wolf's Gradient-weighted Rollout, "Transformer
 Interpretability Beyond Attention Visualization" (arXiv:2101.03919, already
 in this project's literature review). Their method reads relevance off the
 CLS-token row of the final matrix; SegFormer has no CLS token, so this
-adaptation reads relevance as the row-mean of the final matrix instead —
+adaptation reads relevance as the row-mean of the final matrix instead,
 each token's average received relevance across all 64 stage-4 queries.
 
 The result is an 8x8 relevance grid (stage-4 resolution for a 256x256
@@ -60,7 +60,7 @@ from .segformer_model import forest_prob
 
 
 def _default_target(outputs) -> torch.Tensor:
-    """Sum of predicted forest-class probability mass — a natural default
+    """Sum of predicted forest-class probability mass: a natural default
     scalar to explain: 'what pixels drove the model to say forest here?'"""
     return forest_prob(outputs.logits).sum()
 
@@ -77,11 +77,11 @@ def grad_rollout_attention_map(
     Returns (attention_map, outputs).
     attention_map: (out_size) tensor in [0, 1], batch size must be 1.
     outputs: the model's SemanticSegmenterOutput for this forward pass
-             (re-usable by the caller — no need to re-run the model).
+             (re-usable by the caller, no need to re-run the model).
 
     Two modes, controlled by `create_graph`:
 
-    create_graph=False (default — inference / qualitative figures):
+    create_graph=False (default: inference / qualitative figures):
         Cheap path. Gradients are computed with a plain `.backward()` into
         `.grad`, then detached. Calls `model.zero_grad()` internally, so
         don't use this mid-way through accumulating gradients for something
@@ -89,7 +89,7 @@ def grad_rollout_attention_map(
 
     create_graph=True (training with the Attention Consistency Loss):
         The whole point of L_att is "attention map as a first-class
-        training target" (proposal §3.1) — but A is itself *defined* via a
+        training target" (proposal §3.1), but A is itself *defined* via a
         gradient (Grad-Rollout). Backpropagating L_att(A, A*) into the
         model therefore requires a SECOND derivative through that first
         gradient, i.e. double backprop. This path computes the inner
@@ -99,7 +99,7 @@ def grad_rollout_attention_map(
         w.r.t. model parameters and can be plugged into a combined loss
         that the caller backpropagates ONCE at the end. Caller is
         responsible for that final `.backward()` (and for calling
-        `model.zero_grad()` beforehand) — this function does not touch
+        `model.zero_grad()` beforehand); this function does not touch
         `.grad` or call `.backward()` in this mode.
     """
     if pixel_values.shape[0] != 1:
@@ -125,7 +125,7 @@ def grad_rollout_attention_map(
         grads = [attn.grad for attn in stage_attentions]
         if any(g is None for g in grads):
             raise RuntimeError(
-                "Stage-4 attention has no gradient after backward() — "
+                "Stage-4 attention has no gradient after backward(): "
                 "target_fn likely doesn't depend on this stage's attention."
             )
 

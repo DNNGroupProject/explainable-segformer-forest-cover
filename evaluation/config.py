@@ -4,14 +4,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 PROJECT = ROOT.parent  # repo root
 
-# Dataset not included in the repo — see README for how to obtain it and
+# Dataset not included in the repo; see README for how to obtain it and
 # where to place it.
 DATA_DIR = PROJECT / "data"
 
 IMG_DIR = DATA_DIR / "images"
 MASK_DIR = DATA_DIR / "masks"
 
-# CNN baseline: PyTorch U-Net (paper row). Not included — train with
+# CNN baseline: PyTorch U-Net (paper row). Not included; train with
 # scripts/train_unet_augmentation_ablation.py or provide your own checkpoint.
 UNET_CKPT = PROJECT / "checkpoints" / "unet_baseline_best.pt"
 # Superseded Keras checkpoint (evaluate.py --model unet_keras only)

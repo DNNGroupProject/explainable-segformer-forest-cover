@@ -6,7 +6,7 @@ Full scale (paper numbers):
       python -m scripts.train_deeplab_multiseed
 
 Uses the 3576/766/766 seed-42 split (`deeplab_data.py`). Trains seeds
-42/43/44 from scratch. Writes `n_test` into `deeplab_multiseed.json` —
+42/43/44 from scratch. Writes `n_test` into `deeplab_multiseed.json`;
 must be 766.
 
 Smoke defaults (local CPU):
@@ -60,7 +60,7 @@ from deeplab_data import (  # noqa: E402
 )
 
 SEEDS = [42, 43, 44]
-DEEPLAB_LABEL = "DeepLabV3+ (MobileNetV3) — extra baseline"
+DEEPLAB_LABEL = "DeepLabV3+ (MobileNetV3), extra baseline"
 
 MAX_SAMPLES = int(os.environ.get("DEEPLAB_MAX_SAMPLES", "400"))
 EPOCHS = int(os.environ.get("DEEPLAB_EPOCHS", "5"))
@@ -357,7 +357,7 @@ def write_ablation_tables(
     scale_note = (
         f"full-scale split 3576/766/766, {EPOCHS} epochs"
         if FULL_SCALE
-        else f"smoke (max_samples={MAX_SAMPLES}, {EPOCHS} epochs) — not paper-comparable"
+        else f"smoke (max_samples={MAX_SAMPLES}, {EPOCHS} epochs), not paper-comparable"
     )
     lines = [
         "# Ablation results (mean ± std)",
@@ -411,7 +411,7 @@ def main() -> None:
         )
 
     # Always use the aligned split for the paper path; smoke still uses it
-    # but only when dataset is present — for tiny smoke without wanting 5k
+    # but only when dataset is present, for tiny smoke without wanting 5k
     # images, require FULL_SCALE or explicit env.
     if not FULL_SCALE:
         # Legacy smoke: load first MAX_SAMPLES via Phase1 adapters (unchanged sizes)

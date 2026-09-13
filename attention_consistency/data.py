@@ -1,7 +1,7 @@
 """Dataset loading for the SegFormer + Attention Consistency Loss pipeline.
 
 Defaults to `data/{images,masks}` at the repo root (not included in the
-repo — see README). The shuffle/split mirrors `dataset.py`'s `make_splits`
+repo, see README). The shuffle/split mirrors `dataset.py`'s `make_splits`
 bit-for-bit (sorted mask filenames, stdlib `random.shuffle` under the shared
 seed 42, front-slice val/test/train) so every baseline in this repo is
 trained/scored on the exact same held-out split (3576/766/766 off the

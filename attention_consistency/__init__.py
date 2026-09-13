@@ -1,5 +1,5 @@
 """
-Explainability-guided SegFormer-B0 pipeline (Person 3 — Loss & Training).
+Explainability-guided SegFormer-B0 pipeline (Person 3, Loss & Training).
 
 Also carries the two pieces this package depends on end-to-end so the whole
 chain is runnable from one place:

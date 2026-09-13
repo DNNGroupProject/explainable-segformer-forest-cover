@@ -2,7 +2,7 @@
 Segmentation metrics for Person 4 (Evaluation Lead).
 
 Accumulate TP/FP/FN/TN over the FULL test set, then compute ratios once.
-(Do not average per-batch IoUs — that biases small batches.)
+(Do not average per-batch IoUs; that biases small batches.)
 """
 from __future__ import annotations
 

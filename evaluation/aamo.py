@@ -1,5 +1,5 @@
 """
-AAMO — Average Attention-Mask Overlap
+AAMO: Average Attention-Mask Overlap
 
 Proposal (§4.4): normalized overlap between the thresholded attention map
 and the ground-truth forest mask. Quantifies explanation faithfulness.
@@ -55,9 +55,9 @@ def compute_aamo(
     Returns
     -------
     dict with:
-      aamo       — |A_thr ∩ Y| / |Y|   (proposal-style overlap / forest coverage)
-      aamo_dice  — Dice(A_thr, Y)
-      aamo_iou   — IoU(A_thr, Y)
+      aamo       : |A_thr ∩ Y| / |Y|   (proposal-style overlap / forest coverage)
+      aamo_dice  : Dice(A_thr, Y)
+      aamo_iou   : IoU(A_thr, Y)
       precision_att, recall_att
     """
     a = normalize_attention(attention) if normalize else _as_2d(attention)

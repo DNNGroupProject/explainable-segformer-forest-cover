@@ -1,5 +1,5 @@
 """
-Unit tests for the AAMO metric, against dummy attention/mask arrays only —
+Unit tests for the AAMO metric, against dummy attention/mask arrays only;
 no trained model or checkpoint needed.
 
 Run:
@@ -31,7 +31,7 @@ def test_perfect_overlap_gives_aamo_one():
     y = _quadrant_mask()
     a = y.copy()  # attention exactly matches the mask
     # compute_aamo divides by (|Y| + eps), so a perfect match approaches but
-    # never exactly equals 1.0 — tolerance is loosened to account for eps.
+    # never exactly equals 1.0; tolerance is loosened to account for eps.
     out = compute_aamo(a, y, thr=0.5, normalize=False)
     assert abs(out["aamo"] - 1.0) < 1e-4
     assert abs(out["aamo_dice"] - 1.0) < 1e-4
@@ -110,7 +110,7 @@ def test_mean_aamo_averages_across_samples():
 
 def test_shapes_with_batch_and_channel_dims_are_squeezed():
     # rollout.py / model outputs may come through as (1, H, W) or (1, 1, H, W)
-    # rather than bare (H, W) — compute_aamo should handle both.
+    # rather than bare (H, W); compute_aamo should handle both.
     y = _quadrant_mask()
     a = y.copy()
     out_2d = compute_aamo(a, y, thr=0.5, normalize=False)
