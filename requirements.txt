@@ -1,0 +1,12 @@
+torch>=2.0
+torchvision>=0.15
+transformers>=4.30
+numpy
+opencv-python
+Pillow
+scikit-learn
+matplotlib
+
+# Optional: only needed for the legacy `--model unet_keras` evaluation path.
+# tensorflow>=2.12
+# keras-flops

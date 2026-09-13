@@ -1,0 +1,9 @@
+weight_decay,lr_schedule,variant,best_val_dice,final_val_dice,gap,final_val_iou
+0.01,none,vanilla,0.7924,0.7614,0.0310,0.6849
+0.05,none,vanilla,0.7922,0.7805,0.0117,0.7065
+0.01,cosine,vanilla,0.7993,0.7805,0.0188,0.7046
+0.05,cosine,vanilla,0.7955,0.7804,0.0151,0.7043
+0.01,none,att,0.7941,0.7867,0.0074,0.7101
+0.05,none,att,0.7936,0.7654,0.0282,0.6866
+0.01,cosine,att,0.7916,0.7855,0.0061,0.7083
+0.05,cosine,att,0.7923,0.7722,0.0201,0.6960

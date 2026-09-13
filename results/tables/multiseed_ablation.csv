@@ -1,0 +1,5 @@
+config,seeds,dice_mean,dice_std,iou_mean,iou_std,aamo_mean,aamo_std
+SegFormer-B0 (vanilla),42/43/44,0.8723,0.0024,0.7735,0.0038,0.0435,0.0167
+SegFormer-B0 + Attention Consistency (MSE),42/43/44,0.8564,0.0026,0.7488,0.0039,0.7028,0.0392
+SegFormer-B0 + Attention Consistency + Boundary Refinement (lambda3=0.5),42/43/44,0.8505,0.0139,0.7399,0.0208,0.6881,0.0719
+DeepLabV3+ (MobileNetV3),42/43/44,0.8404,0.0278,0.7255,0.0418,,

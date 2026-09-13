@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Dataset (not distributed — see README)
+data/
+
+# Trained weights and run outputs (not distributed — see README)
+checkpoints/
+results/runs/
+*.pt
+*.keras
+!tests/fixtures/*.pt
+
+.DS_Store
